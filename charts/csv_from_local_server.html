@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js"
+	type="text/javascript"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"
+	type="text/javascript"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"
+	type="text/javascript"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"
+	type="text/javascript"></script>
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>csv_from_local_server</title>
+
+<!-- <script src="jquery.js"></script> -->
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+<!-- <script type="text/javascript" src="sample array.json"></script> -->
+<script type="text/javascript">
+	
+</script>
+<script src="https://code.highcharts.com/highcharts.js"
+	type="text/javascript"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"
+	type="text/javascript"></script>
+<script type="text/javascript">
+
+
+var options = {
+    chart: {
+        renderTo: 'container',
+        defaultSeriesType: 'column'
+    },
+    title: {
+        text: 'os4es from csv'
+    },
+    xAxis: {
+        categories: []
+    },
+    yAxis: {
+        title: {
+            text: 'Units'
+        }
+    },
+    series: []
+};
+
+$.get('data.csv', function(data) {//BY ADDING EXTRA BLANK LINES, extra lines with different colors are added.
+    // Split the lines
+    var lines = data.split('\n');
+    
+    // Iterate over the lines and add categories or series
+    $.each(lines, function(lineNo, line) {
+        var items = line.split(',');
+        
+        // header line containes categories
+        if (lineNo == 0) {
+            $.each(items, function(itemNo, item) {
+                if (itemNo > 0) options.xAxis.categories.push(item);
+            });
+        }
+        
+        // the rest of the lines contain data with their name in the first 
+        // position
+        else {
+            var series = {
+                data: []
+            };
+            $.each(items, function(itemNo, item) {
+                if (itemNo == 0) {
+                    series.name = item;
+                } else {
+                    series.data.push(parseFloat(item));
+                }
+            });
+            
+            options.series.push(series);
+    
+        }
+        
+    });
+    
+    // Create the chart
+    var chart = new Highcharts.Chart(options);
+});
+
+</script>
+</head>
+<body>
+	 <div id="container"
+		style="min-width: 310px; height: 400px; margin: 0 auto"></div> 
+</body>
+</html>

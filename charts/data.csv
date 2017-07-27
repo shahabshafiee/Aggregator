@@ -1,0 +1,4 @@
+Categories,morning,afternoon,evening,night
+supply,8,4,6,5
+demand,3,4,2,3
+threshhold,6,6,7,3
