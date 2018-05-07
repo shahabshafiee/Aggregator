@@ -67,7 +67,7 @@ public class mainClass {
 
 		JSONArray o = (JSONArray) parser.parse(s1);
 
-		//JSONArray array = (JSONArray) o.get("id");
+		//JSONArray array = (JSONArray) o.get("id"); !
 		ArrayList<JSONObject> list = new ArrayList<>();
 
 		numberOfServices=o.size();
